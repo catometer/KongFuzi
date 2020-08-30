@@ -18,9 +18,9 @@ GNU General Public License for more details.
 See the GNU General Public License at <http://www.gnu.org/licenses/>. """
 
 import random
-from tkinter import *
-from tkinter import filedialog
-from tkinter import messagebox
+import tkinter as tk
+from tkinter import filedialog as fd
+from tkinter import messagebox as mb
 
 ttl = "KongFuzi: Version 2.0"
 
@@ -44,20 +44,20 @@ fbdict = {"correct":['Correct!','Great job!','Keep it up!','Yes!']
 run = True
 
 def mainmenu():
-    startwindow = Tk()
+    startwindow = tk.Tk()
     startwindow.title(ttl)
-    Label(startwindow, text="Hello! KongFuzi is here to help you with your Chinese vocabulary of the day! Choose an option to continue.\n",wraplength=400,width=60).grid(row=0)
-    b1_select = Button (startwindow, text="Select a file", width=13, command=lambda:select(startwindow))
+    tk.Label(startwindow, text="Hello! KongFuzi is here to help you with your Chinese vocabulary of the day! Choose an option to continue.\n",wraplength=400,width=60).grid(row=0)
+    b1_select = tk.Button (startwindow, text="Select a file", width=13, command=lambda:select(startwindow))
     b1_select.grid(row=1)
-    b2_input = Button (startwindow, text="Input vocabulary", width=16, command=lambda:vocinput(startwindow))
+    b2_input = tk.Button (startwindow, text="Input vocabulary", width=16, command=lambda:vocinput(startwindow))
     b2_input.grid(row=2)
-    Label(startwindow,text="\n").grid(row=3)
+    tk.Label(startwindow,text="\n").grid(row=3)
     startwindow.mainloop()
     
 def backtomain(vocabulary,previouswindow):
     if len(vocabulary) == 1:
         if vocabulary[0] != "input":
-            yesno = messagebox.askquestion(ttl, "Do you want to save your current submissions?")
+            yesno = mb.askquestion(ttl, "Do you want to save your current submissions?")
             if yesno == "yes":
                 save(vocabulary)
                 previouswindow.destroy()
@@ -74,7 +74,7 @@ def backtomain(vocabulary,previouswindow):
         mainmenu()
 
 def select(previous_window):
-    fchoice = filedialog.askopenfilename(title="Select a vocabulary file:",defaultextension="txt")
+    fchoice = fd.askopenfilename(title="Select a vocabulary file:",defaultextension="txt")
     try:
         handler = open(fchoice,encoding="utf-8-sig")
     except: "do nothing!"
@@ -89,32 +89,32 @@ def select(previous_window):
 def vocinput(previouswindow):
     vocab = ["input"]
     previouswindow.destroy()
-    vocinpwin = Tk()
+    vocinpwin = tk.Tk()
     vocinpwin.title(ttl)
-    subttl = Label(text = "VOCABULARY INPUT",width=60)
+    subttl = tk.Label(text = "VOCABULARY INPUT",width=60)
     subttl.grid(row=0,column=0,columnspan=3)
-    hanzi_request = Label(text = "Hanzi: ")
+    hanzi_request = tk.Label(text = "Hanzi: ")
     hanzi_request.grid(row=1,column=0,sticky="e")
-    hanzi_entry = Entry(vocinpwin)
+    hanzi_entry = tk.Entry(vocinpwin)
     hanzi_entry.grid(row=1,column=1,stick="w")
-    pinyin_request = Label(text = "Pinyin: ")
+    pinyin_request = tk.Label(text = "Pinyin: ")
     pinyin_request.grid(row=2,column=0,sticky="e")
-    pinyin_entry = Entry(vocinpwin)
+    pinyin_entry = tk.Entry(vocinpwin)
     pinyin_entry.grid(row=2,column=1,sticky="w")
-    pinyin_info = Label(text = "Note: for tonal marks type 1, 2, 3 or 4 after the vowel.\nFor 'u' with umlaut type 'v' followed by the tone number.\nE.g. 'e3' for 'ě' or 'v2' for 'ǘ'.",justify="left")
+    pinyin_info = tk.Label(text = "Note: for tonal marks type 1, 2, 3 or 4 after the vowel.\nFor 'u' with umlaut type 'v' followed by the tone number.\nE.g. 'e3' for 'ě' or 'v2' for 'ǘ'.",justify="left")
     pinyin_info.grid(row=3,column=1,sticky="e")
-    trans_request = Label(text = "Meaning: ")
+    trans_request = tk.Label(text = "Meaning: ")
     trans_request.grid(row=4,column=0,sticky="e")
-    trans_entry = Entry(vocinpwin)
+    trans_entry = tk.Entry(vocinpwin)
     trans_entry.grid(row=4,column=1,sticky="w")
-    showvoc = Text(vocinpwin)
-    sbmitbtn = Button(text = "Submit", command=lambda:lineappend(hanzi_entry,pinyin_entry,trans_entry,showvoc,vocab),width=16)
+    showvoc = tk.Text(vocinpwin)
+    sbmitbtn = tk.Button(text = "Submit", command=lambda:lineappend(hanzi_entry,pinyin_entry,trans_entry,showvoc,vocab),width=16)
     sbmitbtn.grid(row=5,column=1,sticky="w")
-    savebtn = Button(text = "Save", command=lambda:save(vocab),width=16)
+    savebtn = tk.Button(text = "Save", command=lambda:save(vocab),width=16)
     savebtn.grid(row=5,column=2,sticky="e")
-    testbtn = Button(text = "Go to test",command=lambda:test(vocab,vocinpwin),width=16)
+    testbtn = tk.Button(text = "Go to test",command=lambda:test(vocab,vocinpwin),width=16)
     testbtn.grid(row=1,column=2,sticky="e")
-    backbtn = Button(text = "Main Menu",width=16,command=lambda:backtomain(vocab,vocinpwin))
+    backbtn = tk.Button(text = "Main Menu",width=16,command=lambda:backtomain(vocab,vocinpwin))
     backbtn.grid(row=2,column=2,sticky="e")
     showvoc.grid(row=10,column=0,columnspan=3)
     vocinpwin.mainloop()
@@ -138,7 +138,7 @@ def getfrom(lst):
         else:
             if errormsg == 0:
                 errormsg = 1
-                messagebox.showinfo(ttl,"One or more fields are empty!")
+                mb.showinfo(ttl,"One or more fields are empty!")
     return line
 
 def lineappend(eh,ep,et,textbox,vocabulary):
@@ -147,22 +147,22 @@ def lineappend(eh,ep,et,textbox,vocabulary):
     if len(extracted) == 3:
         vocabulary.append(extracted)
         for i in rawline:
-            i.delete(0, END)
-    textbox.delete(0.0,END)
+            i.delete(0, tk.END)
+    textbox.delete(0.0,tk.END)
     for finalline in vocabulary:
         if finalline != "input":
             finalline = str(finalline[0])+" - "+str(finalline[1])+" - "+str(finalline[2])+"\n"
-            textbox.insert(END,finalline)
+            textbox.insert(tk.END,finalline)
 
 def save(vocabulary):
     if vocabulary[0] == "input":
         if len(vocabulary) == 1:
-            messagebox.showinfo(ttl,"You don't have any submissions!")
+            mb.showinfo(ttl,"You don't have any submissions!")
         else:
             del vocabulary[0]
             save(vocabulary)
     else:
-        filename = filedialog.asksaveasfilename(title="Save",defaultextension="txt")
+        filename = fd.asksaveasfilename(title="Save",defaultextension="txt")
         try:
             vocabfile = open(filename,"w+",encoding="utf-8-sig")
         except:
@@ -175,11 +175,11 @@ def save(vocabulary):
 def test(vocabulary,previous_window):
     if vocabulary[0] == "input":
         if len(vocabulary) == 1:
-            yesno = messagebox.askquestion(ttl, "You don't have any submissions. Do you want to exit?", default="no")
+            yesno = mb.askquestion(ttl, "You don't have any submissions. Do you want to exit?", default="no")
             if yesno == "yes":
                 exit()
         else:
-            yesno = messagebox.askquestion(ttl, "Do you want to save your current submissions?", default="yes")
+            yesno = mb.askquestion(ttl, "Do you want to save your current submissions?", default="yes")
             if yesno == "yes":
                 del vocabulary[0]
                 save(vocabulary)
@@ -192,22 +192,22 @@ def test(vocabulary,previous_window):
         def testwindow(p_or_t,answer):
             global run
             run = True
-            testwin = Tk()
+            testwin = tk.Tk()
             testwin.title(ttl)
-            subttl = Label(text = "PRACTICE SESSION",width=60)
+            subttl = tk.Label(text = "PRACTICE SESSION",width=60)
             subttl.pack()
             input_req_ttl = 'Enter the '+p_or_t+' for '+hanzi+': '
-            input_req = Label(text = input_req_ttl, width=50)
+            input_req = tk.Label(text = input_req_ttl, width=50)
             input_req.pack()
-            userinput = Entry(testwin)
+            userinput = tk.Entry(testwin)
             userinput.pack()
-            b1 = Button(text = "Submit", command=lambda:_feedback(answer,userinput,testwin))
+            b1 = tk.Button(text = "Submit", command=lambda:_feedback(answer,userinput,testwin))
             b1.pack()
-            b2 = Button(text = "Hint", command=lambda:_hint(answer))
+            b2 = tk.Button(text = "Hint", command=lambda:_hint(answer))
             b2.pack()
-            b3 = Button(text = "Exit", command=_exit)
+            b3 = tk.Button(text = "Exit", command=_exit)
             b3.pack()
-            n1 = Label(text = "\n")
+            n1 = tk.Label(text = "\n")
             n1.pack()
             testwin.mainloop()
         while run:
@@ -236,7 +236,7 @@ def _hint(correct_a):
         hint = "It starts with '(a) "+str(word[4])+"'"
     else:
         hint = "It starts with '"+str(word[0])+"'!"
-    messagebox.showinfo(ttl,hint)
+    mb.showinfo(ttl,hint)
 
 def _feedback(correct_a,user_a_entry,window):
     user_a_raw = user_a_entry.get().lower()
@@ -285,8 +285,8 @@ def _feedback(correct_a,user_a_entry,window):
         feedback = random.choice(fbdict["wrong"])
         stats_counter["wrong"] += 1
     finalfeedback = feedback+"\nYour answer: "+str(user_a)+"\nCorrect answer: "+str(correct_a)
-    messagebox.showinfo(ttl,finalfeedback)
-    user_a_entry.delete(0,END)
+    mb.showinfo(ttl,finalfeedback)
+    user_a_entry.delete(0,tk.END)
     window.destroy()
 
 #Function for displaying a message about the number of correct/wrong/incomplete answers by the end of the practice session 
@@ -305,7 +305,7 @@ def _exit():
     global run
     run = False
     msg = stats(stats_counter)
-    x = messagebox.showinfo(ttl,msg)
+    x = mb.showinfo(ttl,msg)
     if x == "ok":
         exit()
 

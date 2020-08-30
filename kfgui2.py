@@ -73,14 +73,9 @@ def backtomain(vocabulary, previouswindow):
             previouswindow.destroy()
             mainmenu()
     else:
-        yesno = mb.askquestion(ttl, "Do you want to save your current submissions?")
-        if yesno == "yes":
-            save(vocabulary)
-            previouswindow.destroy()
-            mainmenu()
-        else:
-            previouswindow.destroy()
-            mainmenu()
+        save(vocabulary)
+        previouswindow.destroy()
+        mainmenu()
 
 
 def select(previous_window):

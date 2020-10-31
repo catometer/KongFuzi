@@ -27,19 +27,14 @@ ttl = "KongFuzi: Version 2.0"
 # Storing the number of correct/wrong/incomplete answers to display as feedback by the end of the practice session
 stats_counter = {"correct": 0, "wrong": 0, "incomplete": 0, "partially wrong": 0}
 
-# Pinyin characters for chinese tonal sounds (values) and non-pinyin conventions (keys) to type them in within the program
-tonals = {"a1": "ā", "a2": "á", "a3": "ǎ", "a4": "à"
-    , "e1": "ē", "e2": "é", "e3": "ě", "e4": "è"
-    , "i1": "ī", "i2": "í", "i3": "ǐ", "i4": "ì"
-    , "o1": "ō", "o2": "ó", "o3": "ǒ", "o4": "ò"
-    , "u1": "ū", "u2": "ú", "u3": "ǔ", "u4": "ù"
-    , "v1": "ǖ", "v2": "ǘ", "v3": "ǚ", "v4": "ǜ"
-          }
+# Pinyin characters for chinese tonal sounds (values) and non-pinyin conventions (keys) to type them in within the
+# program
+tonals = dict(a1="ā", a2="á", a3="ǎ", a4="à", e1="ē", e2="é", e3="ě", e4="è", i1="ī", i2="í", i3="ǐ", i4="ì", o1="ō",
+              o2="ó", o3="ǒ", o4="ò", u1="ū", u2="ú", u3="ǔ", u4="ù", v1="ǖ", v2="ǘ", v3="ǚ", v4="ǜ")
 
 # Feedback message options for users' answers 
-fbdict = {"correct": ['Correct!', 'Great job!', 'Keep it up!', 'Yes!']
-    , "wrong": ['Wrong! Try again!', 'Oops!', 'Nope!']
-    , "incomplete": "Correct, but it has more meanings!"}
+fbdict = dict(correct=['Correct!', 'Great job!', 'Keep it up!', 'Yes!'], wrong=['Wrong! Try again!', 'Oops!', 'Nope!'],
+              incomplete="Correct, but it has more meanings!")
 
 run = True
 
@@ -48,7 +43,8 @@ def mainmenu():
     startwindow = tk.Tk()
     startwindow.title(ttl)
     tk.Label(startwindow,
-             text="Hello! KongFuzi is here to help you with your Chinese vocabulary of the day! Choose an option to continue.\n",
+             text="Hello! KongFuzi is here to help you with your Chinese vocabulary of the day! Choose an option to "
+                  "continue.\n",
              wraplength=400, width=60).grid(row=0)
     b1_select = tk.Button(startwindow, text="Select a file", width=13, command=lambda: select(startwindow))
     b1_select.grid(row=1)
@@ -113,7 +109,8 @@ def vocinput(previouswindow):
     pinyin_entry = tk.Entry(vocinpwin)
     pinyin_entry.grid(row=2, column=1, sticky="w")
     pinyin_info = tk.Label(
-        text="Note: for tonal marks type 1, 2, 3 or 4 after the vowel.\nFor 'u' with umlaut type 'v' followed by the tone number.\nE.g. 'e3' for 'ě' or 'v2' for 'ǘ'.",
+        text="Note: for tonal marks type 1, 2, 3 or 4 after the vowel.\nFor 'u' with umlaut type 'v' followed by the "
+             "tone number.\nE.g. 'e3' for 'ě' or 'v2' for 'ǘ'.",
         justify="left")
     pinyin_info.grid(row=3, column=1, sticky="e")
     trans_request = tk.Label(text="Meaning: ")
@@ -244,7 +241,6 @@ def test(vocabulary, previous_window):
 
 def _hint(correct_a):
     word = list(correct_a)
-    hint = "none"
     if correct_a.startswith('to be '):
         hint = "It starts with '(to be ) " + str(word[6]) + "'"
     elif correct_a.startswith('to '):
